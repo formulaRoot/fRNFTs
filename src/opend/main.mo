@@ -1,6 +1,7 @@
 import Cycles "mo:base/ExperimentalCycles";
 import Debug "mo:base/Debug";
 import HashMap "mo:base/HashMap";
+import Iter "mo:base/Iter";
 import List "mo:base/List";
 import Principal "mo:base/Principal";
 
@@ -53,6 +54,14 @@ var mapOfListings = HashMap.HashMap<Principal, Listing>(1, Principal.equal, Prin
 
         return List.toArray(userNFTs);
     };
+
+    public query func getListedNFTs() : async [Principal] {
+
+        let ids = Iter.toArray(mapOfListings.keys());
+        return ids;
+
+    };
+
     public shared(msg) func listItem(id: Principal, price: Nat) : async Text{
         var item : NFTActorClass.NFT = switch(mapOfNFTs.get(id)) {
             case null return "NFT Not Found";
