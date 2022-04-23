@@ -73,8 +73,11 @@ var mapOfListings = HashMap.HashMap<Principal, Listing>(1, Principal.equal, Prin
         return "Root: You dont own this NFT!"
     }
 
-        
+    };
 
-    }
+
+public query func getOpenDCanisterID() : async Principal {
+    return Principal.fromActor(OpenD);
+}
 
 };

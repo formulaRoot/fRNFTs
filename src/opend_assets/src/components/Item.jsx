@@ -20,12 +20,17 @@ function Item(props) {
 
 
   const id = props.id;
+
   const localHost = "http://localhost:8080";
   const agent = new HttpAgent({ host: localHost });
 
+  //TODO: Remove agent.fetchTootKey(); before going live
+  agent.fetchRootKey();
+  let NFTActor;
+
 
   async function loadNFT() {
-    const NFTActor = await Actor.createActor(idlFactory, {
+    NFTActor = await Actor.createActor(idlFactory, {
       agent, canisterId: id,
     });
 
@@ -39,12 +44,12 @@ function Item(props) {
     setName(name);
     setOwner(owner.toText());
     setImage(image);
+
     setButton(<Button handleClick={handleSell} text={"Sell"} />);
   }
 
   useEffect(() => {
     loadNFT();
-
   }, []);
 
   let price;
@@ -57,14 +62,20 @@ function Item(props) {
       value={price}
       onChange={(e) => price = e.target.value}
     />);
-    setButton(<Button handleClick={handleSell} text={"Confirm"} />);
+    setButton(<Button handleClick={sellItem} text={"Confirm"} />);
   }
 
 
   async function sellItem() {
     console.log("confirm clicked")
-    listingResult = await opend.listItem(props.id, Number(price));
+    const listingResult = await opend.listItem(props.id, Number(price));
     console.log("listing: " + listingResult);
+    if (listingResult == "Success") {
+      const openDID = await opend.getOpenDCanisterID();
+      const transferResult = await NFTActor.transferOwnership(openDID);
+      console.log("Root: Transfer> " + transferResult);
+
+    }
   }
 
   return (

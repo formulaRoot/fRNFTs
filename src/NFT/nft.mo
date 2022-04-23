@@ -5,9 +5,9 @@ import Principal "mo:base/Principal";
 // to create an actor class add the "class" keyword after actor 
 actor class NFT (name: Text, owner: Principal, content: [Nat8]) = this  {
 
-    let itemName = name; 
-    let nftOwner = owner;
-    let imageBytes = content;
+private let itemName = name; 
+private var nftOwner = owner;
+private let imageBytes = content;
 
 
 //query functions 
@@ -26,5 +26,14 @@ actor class NFT (name: Text, owner: Principal, content: [Nat8]) = this  {
     public query func getCanisterId() : async Principal {
         return Principal.fromActor(this);
     };
+    public shared(msg) func transferedOwnership(newOwner: Principal) : async Text {
+
+        if (msg.caller == nftOwner) {
+            nftOwner := newOwner;
+            return "Success";
+        } else {
+            return "Root: Not Initiated by NFT holder";
+        }
+    }
 
 };
