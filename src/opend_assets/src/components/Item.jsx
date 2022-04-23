@@ -14,7 +14,7 @@ function Item(props) {
 
 
 
-  const id = Principal.fromText(props.id);
+  const id = props.id;
   const localHost = "http://localhost:8080";
   const agent = new HttpAgent({ host: localHost });
 
