@@ -55,7 +55,7 @@ var mapOfListings = HashMap.HashMap<Principal, Listing>(1, Principal.equal, Prin
     };
     public shared(msg) func listItem(id: Principal, price: Nat) : async Text{
         var item : NFTActorClass.NFT = switch(mapOfNFTs.get(id)) {
-            case null return "Root: NFT Not Found";
+            case null return "NFT Not Found";
             case (?result) result; 
         };
 
@@ -67,10 +67,10 @@ var mapOfListings = HashMap.HashMap<Principal, Listing>(1, Principal.equal, Prin
         };
 
         mapOfListings.put(id, newListing);
-        return "Root: Success!";
+        return "Success";
 
     } else {
-        return "Root: You dont own this NFT!"
+        return "You dont own this NFT!"
     }
 
     };
@@ -78,6 +78,14 @@ var mapOfListings = HashMap.HashMap<Principal, Listing>(1, Principal.equal, Prin
 
 public query func getOpenDCanisterID() : async Principal {
     return Principal.fromActor(OpenD);
+};
+
+public query func isListed(id:Principal) : async Bool {
+    if (mapOfListings.get(id) == null ) {
+        return false;
+    } else {
+        return true; 
+    }
 }
 
 };

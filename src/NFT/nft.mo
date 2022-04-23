@@ -26,13 +26,14 @@ private let imageBytes = content;
     public query func getCanisterId() : async Principal {
         return Principal.fromActor(this);
     };
-    public shared(msg) func transferedOwnership(newOwner: Principal) : async Text {
+    
+    public shared(msg) func transferOwnership(newOwner: Principal) : async Text {
 
         if (msg.caller == nftOwner) {
             nftOwner := newOwner;
             return "Success";
         } else {
-            return "Root: Not Initiated by NFT holder";
+            return "Not Initiated by NFT holder";
         }
     }
 
