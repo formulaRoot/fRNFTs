@@ -48,19 +48,31 @@ function Item(props) {
     setOwner(owner.toText());
     setImage(image);
 
-    const nftIsListed = await opend.isListed(props.id);
+    if (props.role == "collection") {
 
 
-    if (nftIsListed) {
-      setOwner("OpenD");
-      setBlur({ filter: "blur(4px" });
-      setSellStatus("Listed");
 
-    } else {
-      setButton(<Button handleClick={handleSell} text={"Sell"} />);
+      const nftIsListed = await opend.isListed(props.id);
+
+
+      if (nftIsListed) {
+        setOwner("OpenD");
+        setBlur({ filter: "blur(4px" });
+        setSellStatus("Listed");
+
+      } else {
+        setButton(<Button handleClick={handleSell} text={"Sell"} />);
+
+      }
+    } else if (props.role == "discover") {
+      const originalOwner = await opend.getOriginalOwner(props.id);
+      if (originalOwner.toText() != CURRENT_USER_ID.toText()) {
+        setButton(<Button handleClick={handleSell} text={"Buy"} />);
+      }
+
+      setButton(<Button handleClick={handleBuy} text={"Buy"} />);
 
     }
-
   }
 
   useEffect(() => {
@@ -79,6 +91,9 @@ function Item(props) {
     />);
     setButton(<Button handleClick={sellItem} text={"Confirm"} />);
   }
+
+
+
 
   async function sellItem() {
     setBlur({ filter: "blur(4px" });
@@ -100,6 +115,13 @@ function Item(props) {
 
     }
   }
+
+
+  async function handleBuy() {
+    console.log("Buy was triggered");
+  }
+
+
 
   return (
     <div className="disGrid-item">

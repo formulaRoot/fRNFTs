@@ -9,7 +9,7 @@ function Gallery(props) {
     if (props.ids != undefined) {
       setItems(
         props.ids.map((NFTID) =>
-          <Item id={NFTID} key={NFTID.toText()} />
+          <Item id={NFTID} key={NFTID.toText()} role={props.role} />
         )
       );
     }
