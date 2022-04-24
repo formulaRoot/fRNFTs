@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import logo from "../../assets/logo.png";
 import { Actor, HttpAgent } from "@dfinity/agent";
 import { idlFactory } from "../../../declarations/nft";
+import { idlFactory as tokenIdlFactory } from "../../../declarations/token";
 import { Principal } from "@dfinity/principal";
 import Button from "./Button";
 import { opend } from "../../../declarations/opend"
@@ -63,7 +64,7 @@ function Item(props) {
     } else if (props.role == "discover") {
       const originalOwner = await opend.getOriginalOwner(props.id);
       if (originalOwner.toText() != CURRENT_USER_ID.toText()) {
-        setButton(<Button handleClick={handleSell} text={"Buy"} />);
+        setButton(<Button handleClick={handleBuy} text={"Buy"} />);
       }
 
       const price = await opend.getListedNFTPrice(props.id);
@@ -117,8 +118,18 @@ function Item(props) {
 
   async function handleBuy() {
     console.log("Buy was triggered");
-  }
+    const tokenActor = await Actor.createActor(tokenIdlFactory, {
+      agent,
+      canisterId: Principal.fromText("xifbj-tqaaa-aaaaa-aaauq-cai"),
 
+    });
+    const sellerId = await opend.getOriginalOwner(props.id);
+    const itemPrice = await opend.getListedNFTPrice(props.id);
+
+    const result = await tokenActor.transfer(sellerId, itemPrice);
+    console.log(result);
+
+  }
 
 
   return (
