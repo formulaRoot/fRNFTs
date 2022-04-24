@@ -1,6 +1,4 @@
-Copyright 2022 London App Brewery LTD (www.appbrewery.com)
-
-The code in this tutorial project is licended under the Apache License, Version 2.0 (the "License");
+The code in this project is licended under the Apache License, Version 2.0 (the "License");
 you may not use this project except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -14,6 +12,12 @@ limitations under the License.
 
 Here is the TL;DR version of the above licence:
 https://tldrlegal.com/license/apache-license-2.0-(apache-2.0)
+
+---
+
+if you run this code on a live canister every deployment will cost you cycles. Canisters are funded through cycles which take ICP tokens.
+
+---
 
 # To Install and Run the Project
 
@@ -131,3 +135,7 @@ dfx canister call xub3y-eqaaa-aaaaa-aaawq-cai transferOwnership '(principal "ryj
 ```
 const dangPrincipal = Principal.fromText("<REPLACE WITH TOKEN CANISTER ID>");
 ```
+
+---
+
+Copyright 2022 London App Brewery LTD (www.appbrewery.com)
