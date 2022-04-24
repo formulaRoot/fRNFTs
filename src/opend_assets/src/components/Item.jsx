@@ -128,6 +128,12 @@ function Item(props) {
 
     const result = await tokenActor.transfer(sellerId, itemPrice);
     console.log(result);
+    if (result == "Success") {
+      //transfer the ownership of the NFT
+      const transferResult = await opend.completePurchase(props.id, sellerId, CURRENT_USER_ID);
+      console.log("purchase: " + transferResult);
+
+    }
 
   }
 
