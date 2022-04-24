@@ -114,7 +114,7 @@ public query func getListedNFTPrice(id: Principal) : async Nat {
     };
 
     return listing.itemPrice;
-}
+};
 
 
 };

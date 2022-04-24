@@ -10,8 +10,6 @@ import CURRENT_USER_ID from "../index";
 import PriceLabel from "./PriceLabel";
 
 
-
-
 function Item(props) {
   const [name, setName] = useState();
   const [owner, setOwner] = useState();
@@ -44,15 +42,11 @@ function Item(props) {
     const imageContent = new Uint8Array(imageData);
     const image = URL.createObjectURL(new Blob([imageContent.buffer], { type: "image/png" }));
 
-
-
     setName(name);
     setOwner(owner.toText());
     setImage(image);
 
     if (props.role == "collection") {
-
-
 
       const nftIsListed = await opend.isListed(props.id);
 
@@ -76,7 +70,6 @@ function Item(props) {
       setPriceLabel(<PriceLabel sellPrice={price.toString()} />);
 
     }
-
 
   }
 
@@ -143,7 +136,7 @@ function Item(props) {
           <div></div>
         </div>
         <div className="disCardContent-root">
-          <PriceLabel />
+          {priceLabel}
           <h2 className="disTypography-root makeStyles-bodyText-24 disTypography-h5 disTypography-gutterBottom">
             {name}<span className="purple-text">{sellStatus}</span>
           </h2>
